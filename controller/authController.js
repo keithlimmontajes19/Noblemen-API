@@ -1,8 +1,13 @@
 require('dotenv/config');
 
-const User = require('../models/userSchema');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
+/* Schema */
+const User = require('../models/userSchema');
+
+/* helpers */
+const Email = require('../helpers/sendEmailHelper');
 
 const userLogin = (req, res, next) => {
     const username = req.body.username;
@@ -28,6 +33,12 @@ const userLogin = (req, res, next) => {
         .catch(err => res.status(400).json({ status: 400, message: 'No result found.', data: err }))
 }
 
+
+const userForgotPassword = (req, res, next) => {
+    Email.sendEmail(req, res, next)
+}
+
 module.exports = {
-    userLogin
+    userLogin,
+    userForgotPassword
 }

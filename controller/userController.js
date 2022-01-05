@@ -2,7 +2,6 @@ const User = require('../models/userSchema');
 const bcryptjs = require('bcryptjs');
 
 const userRegister = (req, res, next) => {
-
     bcryptjs.hash(req.body.password, 10, (err, hashedPassword) => {
         if (err) res.json({ error: err.response })
 
@@ -29,8 +28,16 @@ const userRegister = (req, res, next) => {
 
 const userAll = (req, res, next) => {
     User.find()
-        .then(data => res.status(200).json(data))
-        .catch(err => res.status(400).json([]))
+        .then(data => res.status(200).json({
+            status: 200,
+            message: 'Success get all users.',
+            data: data
+        }))
+        .catch(err => res.status(400).json({
+            status: 400,
+            message: 'Failed get all users.',
+            data: []
+        }))
 }
 
 module.exports = {

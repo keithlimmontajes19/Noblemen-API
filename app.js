@@ -3,6 +3,7 @@ require('dotenv/config');
 const express = require('express')
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
+const cors = require('cors')
 const app = express();
 
 /* COMPONENTS */
@@ -16,6 +17,7 @@ mongoose.connect(process.env.DB_CONNECTION,
     () => app.listen(3001));
 
 /* MIDDLEWARE */
+app.use(cors())
 app.use(bodyParser.json());
 
 /* ROUTES */
