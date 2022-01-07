@@ -1,19 +1,19 @@
-const User = require('../models/userSchema');
+import { User } from '../models/userSchema';
 
-const userAll = (req, res, next) => {
-    User.find()
-        .then(data => res.status(200).json({
+export const userAll = async (req, res) => {
+    try {
+        const response = await User.find();
+        return res.status(200).json({
             status: 200,
             message: 'Success get all users.',
-            data: data
-        }))
-        .catch(err => res.status(400).json({
+            data: response
+        })
+    } catch (e) {
+        return res.status(400).json({
             status: 400,
             message: 'Failed get all users.',
-            data: []
-        }))
+            data: e.message
+        })
+    }
 }
 
-module.exports = {
-    userAll,
-}

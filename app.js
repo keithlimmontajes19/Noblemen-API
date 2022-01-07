@@ -1,26 +1,24 @@
-require('dotenv/config');
 
-const express = require('express')
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser')
-const cors = require('cors')
+import express from 'express'
+import cors from 'cors'
+import bodyParser from 'body-parser'
+
 const app = express();
 
 /* COMPONENTS */
-const authorize = require('./helpers/authorizeHelper');
-const userRoute = require('./routes/userRoute');
-const authRoute = require('./routes/authRoute');
-
-/* CONNECTION */
-mongoose.connect(process.env.DB_CONNECTION,
-    { useNewUrlParser: true, useUnifiedTopology: true },
-    () => app.listen(3001));
+import userRoute from './routes/userRoute';
+import authRoute from './routes/authRoute';
+import connection from './config/connection';
+import { authorize } from './helpers/authorizeHelper';
 
 /* MIDDLEWARE */
 app.use(cors())
 app.use(bodyParser.json());
 
+/* CONNECTION */
+await connection(app);
+
 /* ROUTES */
 app.use('/api/auth', authRoute);
-app.use('/api/user', authorize(), userRoute);
+app.use('/api/user', authorize, userRoute);
 

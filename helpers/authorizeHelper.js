@@ -1,22 +1,22 @@
-require('dotenv/config');
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import CONSTANTS from '../config/constants';
+import { RESPONSE } from './responseHelper';
 
-const jwt = require('jsonwebtoken');
+dotenv.config();
 
-module.exports = () => {
-    return (req, res, next) => {
+export const authorize = async (req, res, next) => {
+    try {
         const token = req.headers['authorization'];
+        const tokenBody = token.slice(7);
 
-        if (!token) {
-            return res.status(401).send({ status: 401, message: 'Unauthorize. Access Denied!', data: {} })
-        } else {
-            const tokenBody = token.slice(7);
-            jwt.verify(tokenBody, process.env.JWT_SECRET, (err, decoded) => {
-                if (err) res.json({ status: 401, message: `Unauthorized, Access denied!`, data: err })
-
-                next();
-            });
-
-        }
-
+        await jwt.verify(tokenBody, process.env.JWT_SECRET, (err) => {
+            if (err) {
+                return res.json(RESPONSE(401, CONSTANTS.UNAUTHORIZE, err))
+            }
+            next();
+        });
+    } catch (e) {
+        return res.status(401).send(RESPONSE(401, CONSTANTS.UNAUTHORIZE, {}))
     }
 }
