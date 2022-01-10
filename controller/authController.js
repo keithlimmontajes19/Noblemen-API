@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
+import moment from 'moment';
 
 /* SCHEMA */
 import { User } from '../models/userSchema';
@@ -106,11 +107,12 @@ export const userTokenVerification = async (user, req) => {
             }
         });
 
+        const URL = `http://${req.headers.host}/api/auth/confirmation/${user._id}/${token.token}`;
         const mailOptions = {
             from: 'no-reply@example.com',
             to: user.email,
             subject: 'Account Verification Link',
-            text: 'Hello ' + user.first_name + ',\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + user.email + '\/' + token.token + '\n\nThank You!\n'
+            html: `<div>Hello ${user.first_name}, <br/><br/>Please verify your account by clicking the link:<br/><a href="${URL}">Clink to Verify Email address </a><br/><br/> Thank you!</div>`
         };
 
         await transporter.sendMail(mailOptions);
@@ -118,10 +120,23 @@ export const userTokenVerification = async (user, req) => {
     } catch (err) {
         return res.status(500).json(RESPONSE(500, CONSTANTS.USER_FAILED, err, STATUS_CODE.ADD_USER_FAILED))
     }
-
-
 }
 
 export const userForgotPassword = (req, res, next) => sendEmail(req, res, next);
 
+export const confirmationRegister = async (req, res, next) => {
+    const token = await Token.findOne({ _userId: req.params.id, token: req.params.token });
+    token.isVerified = true;
+
+    await token.save();
+
+    const user = await User.findOne({ _id: req.params.id });
+    user.isVerified = true;
+
+    await user.save();
+
+    return res.json(req.params);
+
+    return res.redirect(`http://localhost:3000?${req.params.email}`)
+}
 
