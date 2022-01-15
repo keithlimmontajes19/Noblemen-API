@@ -8,10 +8,10 @@ const mongoConnect = async (app) => {
         await mongoose.connect(
             process.env.DB_CONNECTION,
             {useNewUrlParser: true, useUnifiedTopology: true},
-            () => app.listen(8080),
+            () => console.log('connected!'),
         );
 
-        console.log('connected to DB!');
+        // console.log('connected to DB!');
     } catch (error) {
         console.log('error', error);
     }

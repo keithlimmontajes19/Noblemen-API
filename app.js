@@ -13,6 +13,7 @@ import {authorize} from './helpers/authorizeHelper';
 /* MIDDLEWARE */
 app.use(cors());
 app.use(bodyParser.json());
+app.listen(8080);
 
 /* CONNECTION */
 connection(app);
