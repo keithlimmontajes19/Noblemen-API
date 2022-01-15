@@ -12,6 +12,8 @@ const app = express();
 
 /* CONNECTION */
 // connection(app);
+const PORT = process.env.PORT || 8080;
+app.listen(PORT);
 
 /* MIDDLEWARE */
 app.use(cors());
@@ -23,4 +25,3 @@ app.get('/api/test', (req, res) => {
 /* ROUTES */
 // app.use('/api/auth', authRoute);
 // app.use('/api/user', authorize, userRoute);
-app.listen(8000);
