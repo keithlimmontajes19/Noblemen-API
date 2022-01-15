@@ -1,8 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import http from 'http';
 
 const app = express();
+const server = http.Server(app);
 
 /* COMPONENTS */
 import userRoute from './routes/userRoute';
@@ -13,7 +15,7 @@ import {authorize} from './helpers/authorizeHelper';
 /* MIDDLEWARE */
 app.use(cors());
 app.use(bodyParser.json());
-app.listen(8080);
+server.listen(8000);
 
 /* CONNECTION */
 connection(app);
