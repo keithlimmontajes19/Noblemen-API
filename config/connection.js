@@ -8,7 +8,7 @@ const mongoConnect = async (app) => {
         await mongoose.connect(
             process.env.DB_CONNECTION,
             {useNewUrlParser: true, useUnifiedTopology: true},
-            () => app.listen(process.env.PORT),
+            () => app.listen(8080),
         );
 
         console.log('connected to DB!');
