@@ -10,8 +10,6 @@ const mongoConnect = async (app) => {
             {useNewUrlParser: true, useUnifiedTopology: true},
             () => console.log('connected!'),
         );
-
-        // console.log('connected to DB!');
     } catch (error) {
         console.log('error', error);
     }
