@@ -251,7 +251,7 @@ export const userTokenVerification = async (user, req, res) => {
             },
         });
 
-        const URL = `http://${req.headers.host}/api/auth/confirmation/${user._id}/${token.token}`;
+        const URL = `${process.env.BACKEND_BASE_URL}/api/auth/confirmation/${user._id}/${token.token}`;
         const mailOptions = {
             from: 'no-reply@example.com',
             to: user.email,
@@ -343,9 +343,11 @@ export const confirmationRegister = async (req, res, next) => {
         user.isVerified = true;
         await user.save();
 
-        return res.redirect(`${process.env.BASE_URL}?verification=true`);
+        return res.redirect(`${process.env.REACT_BASE_URL}?verification=true`);
     } catch (e) {
-        return res.redirect(`${process.env.BASE_URL}?vertification=false`);
+        return res.redirect(
+            `${process.env.REACT_BASE_URL}?vertification=false`,
+        );
     }
 };
 
