@@ -297,7 +297,7 @@ export const userForgotPassword = async (req, res, next) => {
             },
         });
 
-        const URL = `${process.env.REACT_BASE_URL}/change-password?id=${user._id}&token=${token.token}`;
+        const URL = `${process.env.REACT_BASE_URL}/password?id=${user._id}&token=${token.token}`;
         const mailOptions = {
             from: 'no-reply@example.com',
             to: user.email,
