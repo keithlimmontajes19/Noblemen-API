@@ -8,8 +8,9 @@ const PORT = process.env.PORT || 8080;
 /* COMPONENTS */
 import userRoute from './routes/userRoute';
 import authRoute from './routes/authRoute';
+import homeRoute from './routes/homeRoute';
 import connection from './config/connection';
-import {authorize} from './helpers/authorizeHelper';
+import {authorize, checkUser} from './helpers/authorizeHelper';
 
 /* MIDDLEWARE */
 app.use(cors());
@@ -21,4 +22,5 @@ connection(app);
 
 /* ROUTES */
 app.use('/api/auth', authRoute);
-app.use('/api/user', authorize, userRoute);
+app.use('/api/user', authorize, checkUser, userRoute);
+app.use('/api/home', authorize, checkUser, homeRoute);

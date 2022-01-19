@@ -5,20 +5,20 @@ const Schema = mongoose.Schema;
 const postSchema = new Schema({
     first_name: {
         type: String,
-        required: true
+        required: true,
     },
     last_name: {
         type: String,
-        required: true
+        required: true,
     },
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
     company_name: {
         type: String,
-        required: true
+        required: true,
     },
     password: {
         type: String,
@@ -26,24 +26,24 @@ const postSchema = new Schema({
     },
     isActive: {
         type: Boolean,
-        default: true
+        default: true,
     },
     isVerified: {
         type: Boolean,
-        default: false
+        default: false,
     },
     deletedAt: {
         type: Date,
-        default: null
+        default: null,
     },
     updatedAt: {
         type: Date,
-        default: null
+        default: null,
     },
     createdAt: {
         type: Date,
-        default: Date.now()
-    }
-})
+        default: Date.now(),
+    },
+});
 
-export const User = mongoose.model('User', postSchema);
+export const User = mongoose.model('users', postSchema);

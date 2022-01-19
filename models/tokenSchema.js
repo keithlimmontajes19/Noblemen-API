@@ -5,20 +5,21 @@ const tokenSchema = new Schema({
     _userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'User'
+        ref: 'User',
     },
     token: {
         type: String,
-        required: true
+        required: true,
     },
     expireAt: {
-        type: Date, default: Date.now,
-        index: { expires: 86400000 }
+        type: Date,
+        default: Date.now,
+        index: {expires: 86400000},
     },
     isVerified: {
         type: Boolean,
-        default: false
-    }
-})
+        default: false,
+    },
+});
 
-export const Token = mongoose.model('Token', tokenSchema);
+export const Token = mongoose.model('tokens', tokenSchema);
