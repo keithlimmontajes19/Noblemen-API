@@ -1,10 +1,10 @@
 import express from 'express';
 import {
-    userLogin,
-    userForgotPassword,
-    userRegister,
-    confirmationRegister,
-    changePassword,
+  userLogin,
+  userForgotPassword,
+  userRegister,
+  confirmationRegister,
+  changePassword,
 } from '../controller/authController';
 
 const router = express.Router();
@@ -15,7 +15,7 @@ router.post('/signup', userRegister);
 router.post('/changePassword', changePassword);
 router.get('/confirmation/:id/:token', confirmationRegister);
 router.get('/test', (req, res) => {
-    res.send('Test Hello world');
+  res.send('Test Hello world');
 });
 
 export default router;

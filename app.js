@@ -9,8 +9,10 @@ const PORT = process.env.PORT || 8080;
 import userRoute from './routes/userRoute';
 import authRoute from './routes/authRoute';
 import homeRoute from './routes/homeRoute';
+import fileRoute from './routes/fileRoute';
 import connection from './config/connection';
 import {authorize, checkUser} from './helpers/authorizeHelper';
+import {upload} from './helpers/fileUploadHelper';
 
 /* MIDDLEWARE */
 app.use(cors());
@@ -20,7 +22,10 @@ app.listen(PORT);
 /* CONNECTION */
 connection(app);
 
-/* ROUTES */
+/* PUBLIC ROUTES */
 app.use('/api/auth', authRoute);
+app.use('/api/file', authorize, checkUser, upload.single('file'), fileRoute);
+
+/* PRIVATE ROUTES */
 app.use('/api/user', authorize, checkUser, userRoute);
 app.use('/api/home', authorize, checkUser, homeRoute);
