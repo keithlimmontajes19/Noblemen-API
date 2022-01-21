@@ -1,6 +1,9 @@
+/* schema */
 import {Onboarding} from '../models/onboardingSchema';
 import {User} from '../models/userSchema';
+import {Creative} from '../models/onboardingCreative';
 
+/* helpers */
 import {RESPONSE} from '../helpers/responseHelper';
 import CONSTANTS from '../config/constants';
 import STATUS_CODE from '../config/statusCode';
@@ -31,13 +34,46 @@ export const postWebsiteOnboarding = async (req, res) => {
 
     return res.status(200).json({
       status: 200,
-      message: 'Success get all users.',
+      message: 'Successfully saved.',
       data: response,
     });
   } catch (e) {
     return res.status(400).json({
       status: 400,
-      message: 'Failed get all users.',
+      message: 'Failed to saved.',
+      data: e.message,
+    });
+  }
+};
+
+export const postCreativeProvider = async (req, res) => {
+  try {
+    const localUser = res.locals.user;
+    const user = await User.findOne({email: localUser.email});
+
+    const creative = new Creative({
+      _userId: user.id,
+      images: req.body.images,
+      brand_marks: {
+        primary_logo: req.body.brand_marks.primary_logo,
+        primary_icon: req.body.brand_marks.primary_icon,
+        alternate_logos_icons: req.body.brand_marks.alternate_logos_icons,
+      },
+      colors: req.body.colors,
+    });
+
+    // brand_marks.markModified('brand_marks');
+    const response = await creative.save();
+
+    return res.status(200).json({
+      status: 200,
+      message: 'Successfully saved.',
+      data: response,
+    });
+  } catch (e) {
+    return res.status(400).json({
+      status: 400,
+      message: 'Failed to saved.',
       data: e.message,
     });
   }
