@@ -2,10 +2,10 @@
   "name": "mongodb",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "src",
   "type": "module",
   "scripts": {
-    "start": "nodemon --experimental-modules --es-module-specifier-resolution=node app.js"
+    "start": "nodemon --experimental-modules --es-module-specifier-resolution=node src"
   },
   "author": "",
   "license": "ISC",
@@ -27,9 +27,11 @@
     "nodemon": "^2.0.15"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.7",
+    "@babel/core": "^7.16.10",
     "@babel/preset-env": "^7.16.7",
-    "@babel/register": "^7.16.7"
+    "@babel/register": "^7.16.7",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "babel-preset-latest-node": "^5.5.1"
   },
   "engines": {
     "node": "14.17.0",
